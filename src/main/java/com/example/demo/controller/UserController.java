@@ -20,7 +20,9 @@ import com.example.demo.bean.User;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -80,7 +82,6 @@ public class UserController {
 				//存储url参数中
 				ra.addAttribute("username", gitHubUser.getLogin());
 				
-				
 				//查询是否为新用户
 				User resUser=us.selectByID(gitHubUser.getId());
 				if(resUser==null) {
@@ -92,7 +93,6 @@ public class UserController {
 					user.setUpdateTime(LocalDateTime.now());
 					us.insert(user);
 				}
-				
 				req.getSession().setAttribute("gitHubUser", gitHubUser);
 			}
 		} catch (IOException e) {

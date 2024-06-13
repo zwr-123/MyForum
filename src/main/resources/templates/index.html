@@ -21,9 +21,14 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>
-        <li class="nav-item dropdown">
+        
+           <li class="nav-item">
+          <a class="nav-link" href="https://github.com/login/oauth/authorize?client_id=Ov23lieCe1UectFRY6bN" th:if="${session.gitHubUser==null}">登录</a>
+<!--            disabled -->
+        </li>
+        <li class="nav-item dropdown" th:if="${session.gitHubUser != null}">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+            [[${session.gitHubUser.getLogin()}]]
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Action</a></li>
@@ -32,11 +37,6 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://github.com/login/oauth/authorize?client_id=Ov23lieCe1UectFRY6bN" th:if="${session.gitHubUser==null}">登录</a>
-<!--            disabled -->
-        </li>
-        <li class="nav-item"  th:if="${session.gitHubUser != null}"><span class="nav-link">[[${session.gitHubUser.getLogin()}]]</span></li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
