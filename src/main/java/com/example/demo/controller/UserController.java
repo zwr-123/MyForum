@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.MediaType;
@@ -31,7 +32,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 @Controller
-@RequestMapping("/")
 @Slf4j
 public class UserController {
 	
@@ -47,6 +47,7 @@ public class UserController {
 	 * @date 2024年5月7日 上午6:55:10
 	 * @return
 	 */
+	@GetMapping("/")
 	public String ToIndex() {
 		return "index";
 	}
@@ -60,7 +61,7 @@ public class UserController {
 	 */
 	@SuppressWarnings("finally")
 	@GetMapping("/callback")
-	public String CallBack(@RequestParam String code, HttpServletRequest req,RedirectAttributes ra)  {
+	public String CallBack(@RequestParam String code, HttpServletRequest req,HttpServletResponse rep)  {
 		/**
 		 * github返回code后请求access_token信息
 		 */
@@ -79,8 +80,14 @@ public class UserController {
 				String access_token = res.split("&")[0].split("=")[1];
 //			https://api.github.com/user
 				GitHubUser gitHubUser = runGet("https://api.github.com/user", access_token);
-				//存储url参数中
-				ra.addAttribute("username", gitHubUser.getLogin());
+
+//				如果gitHubUser为空 重定向到首页。这里最好用全局异常处理
+				if(gitHubUser==null) {
+					return "redirect:/";
+				}
+				
+//				若gitHubUser不为空，则添加到Session。以便首页显示用户名
+				req.getSession().setAttribute("gitHubUser", gitHubUser);
 				
 				//查询是否为新用户
 				User resUser=us.selectByID(gitHubUser.getId());
@@ -88,12 +95,17 @@ public class UserController {
 					//存入数据库
 					User user = new User();
 					BeanUtils.copyProperties(gitHubUser, user);
-					user.setToken(UUID.randomUUID().toString());
+					String token=UUID.randomUUID().toString();
+					user.setToken(token);
 					user.setCreateTime(LocalDateTime.now());
 					user.setUpdateTime(LocalDateTime.now());
 					us.insert(user);
+					rep.addCookie(new Cookie("token", token));
 				}
-				req.getSession().setAttribute("gitHubUser", gitHubUser);
+				
+//				若已存在用户，传递cookie给前端
+				rep.addCookie(new Cookie("token", resUser.getToken()));
+			
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

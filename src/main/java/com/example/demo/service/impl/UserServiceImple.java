@@ -29,4 +29,13 @@ public class UserServiceImple implements UserService {
 		return user;
 	}
 
+	/**
+	 * 根据token查询用户
+	 */
+	@Override
+	public User selectByToken(String value) {
+		User user=um.selectByToken(value);
+		return user;
+	}
+
 }

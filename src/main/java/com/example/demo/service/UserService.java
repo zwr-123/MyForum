@@ -20,4 +20,12 @@ public interface UserService {
 	 */
 	User selectByID(String id);
 
+
+	/**
+	 * 根据Token查询用户信息
+	 * @date 2024年6月13日 上午9:19:59
+	 * @param value
+	 */
+	User selectByToken(String value);
+
 }

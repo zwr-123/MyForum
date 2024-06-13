@@ -25,4 +25,14 @@ public interface UserMapper {
 	@Select("select * from user where id=#{id}")
 	User selectByID(String id);
 
+	
+	/**
+	 * 根据token查询用户
+	 * @date 2024年6月13日 上午9:22:26
+	 * @param value
+	 * @return
+	 */
+	@Select("select * from user where token=#{value}")
+	User selectByToken(String value);
+
 }
