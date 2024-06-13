@@ -1,5 +1,7 @@
 package com.example.demo.bean;
 
+import java.net.URLEncoder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -31,8 +33,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 					}
 				}
 			}
-			request.setAttribute("LoginMsg", "请先登录！");
-			request.getRequestDispatcher("/").forward(request, response);
+			response.sendRedirect("/?LoginMsg="+ URLEncoder.encode("请先登录！", "UTF-8"));
 			return false;
 	}
 }

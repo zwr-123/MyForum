@@ -105,11 +105,11 @@ public class UserController {
 				
 //				若已存在用户，传递cookie给前端
 				rep.addCookie(new Cookie("token", resUser.getToken()));
-			
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}finally {
 			return "redirect:/";
 		}
