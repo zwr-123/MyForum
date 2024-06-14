@@ -43,7 +43,6 @@ public class UserController {
 
 	/**
 	 * 去首页
-	 * 
 	 * @date 2024年5月7日 上午6:55:10
 	 * @return
 	 */
@@ -52,6 +51,16 @@ public class UserController {
 		return "index";
 	}
 
+	/**
+	 * 去问题发布页
+	 * @date 2024年6月13日 下午5:19:26
+	 * @return
+	 */
+	@GetMapping("/publish")
+	public String ToPublish() {
+		return "publish";
+	}
+	
 	/**
 	 * code ---> access_token  --->插入用户信息
 	 * @date 2024年5月7日 上午9:42:49

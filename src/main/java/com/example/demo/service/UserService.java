@@ -18,7 +18,7 @@ public interface UserService {
 	 * @param id
 	 * @return
 	 */
-	User selectByID(String id);
+	User selectByID(Integer id);
 
 
 	/**

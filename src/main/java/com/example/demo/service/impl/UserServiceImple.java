@@ -24,7 +24,7 @@ public class UserServiceImple implements UserService {
 	 * 根据id查询用户
 	 */
 	@Override
-	public User selectByID(String id) {
+	public User selectByID(Integer id) {
 		User user=um.selectByID(id);
 		return user;
 	}

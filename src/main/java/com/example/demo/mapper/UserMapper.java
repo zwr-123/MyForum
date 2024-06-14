@@ -23,7 +23,7 @@ public interface UserMapper {
 	 * @param id
 	 */
 	@Select("select * from user where id=#{id}")
-	User selectByID(String id);
+	User selectByID(Integer id);
 
 	
 	/**

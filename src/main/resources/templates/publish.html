@@ -3,8 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <title>问题发布</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
+	<!-- 	navigator -->
+	<div th:replace="~{common/common1 :: navigator}"></div>
+
+	<div class="container-fluid bg-light">
+		<div class="row">
+			<div class="col-xxl-9 col-xl-9 col-lg-9 col-md-12">
+			
+				<h2>
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+					fill="currentColor" class="bi bi-plus-circle-fill"
+					viewBox="0 0 16 16">
+  					<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+				</svg>
+				发起
+				</h2>
+				<hr>
+<!-- 				空行 -->
+				<br/>
+				<br/>
+				<form class="mx-1 my-1">
+					  <div class="mb-3">
+					    <label for="title" class="form-label">问题标题</label>
+					    <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp">
+					    <div id="emailHelp" class="form-text">尽量简洁</div>
+					  </div>
+					  <div class="mb-3">
+					    <label for="des" class="form-label">内容</label>
+					    <textarea class="form-control" rows="8" cols="40" id="des" name="description"></textarea>
+					  </div>
+					   <div class="mb-3">
+					    <label for="tag" class="form-label">添加标签：</label>
+					    <input type="text" class="form-control" id="tag" name="tag" aria-describedby="emailHelp">
+					    <div id="emailHelp" class="form-text">输入标签，以，隔开</div>
+					  </div>
+					  
+					  <div class="mb-3 text-center">
+<!-- 					    <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 					    <label class="form-check-label" for="exampleCheck1">确定</label> -->
+					    <button type="submit" class="btn btn-primary">发布</button>
+					  </div>
+				</form>
+			</div>
+			<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12 text-info">
+				<h1>问题发起指南</h1> <br>
+				1：标题不要超过30字 <br>
+				2：按照指定格式描述问题 <br>
+				3：标签不要超过10个 <br>
+			</div>
+		</div>
+	</div>
+
 
 </body>
 </html>

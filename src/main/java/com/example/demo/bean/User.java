@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-	private String id;
+	private Integer id;
 	private String login;
 	private String token;
 	private LocalDateTime createTime;
