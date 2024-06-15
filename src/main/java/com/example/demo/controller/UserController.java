@@ -51,15 +51,7 @@ public class UserController {
 		return "index";
 	}
 
-	/**
-	 * 去问题发布页
-	 * @date 2024年6月13日 下午5:19:26
-	 * @return
-	 */
-	@GetMapping("/publish")
-	public String ToPublish() {
-		return "publish";
-	}
+
 	
 	/**
 	 * code ---> access_token  --->插入用户信息
