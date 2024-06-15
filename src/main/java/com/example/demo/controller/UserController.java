@@ -41,16 +41,6 @@ public class UserController {
 	public static final MediaType JSON = MediaType.get("application/json;charset=utf-8");
 	OkHttpClient client = new OkHttpClient();
 
-	/**
-	 * 去首页
-	 * @date 2024年5月7日 上午6:55:10
-	 * @return
-	 */
-	@GetMapping("/")
-	public String ToIndex() {
-		return "index";
-	}
-
 
 	
 	/**

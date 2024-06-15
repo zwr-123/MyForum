@@ -24,7 +24,7 @@ public class config1 implements WebMvcConfigurer{
 		// TODO Auto-generated method stub
 		registry.addInterceptor(lcInterceptor)
 		.addPathPatterns("/**")
-		.excludePathPatterns("/","/callback","/css/**","/js/**");
+		.excludePathPatterns("/","/callback","/css/**","/js/**","/pic/**");
 	}
 	
 	@Bean

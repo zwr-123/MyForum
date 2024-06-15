@@ -8,5 +8,62 @@
 </head>
 <body>
 	<div th:replace="~{common/common1 :: navigator}"></div>
+
+	<div class="container-fluid bg-light">
+		<div class="row">
+			<div class="col-xxl-9 col-xl-9 col-lg-9 col-md-12">
+
+				<h2>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+						fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+  						<path fill-rule="evenodd"
+							d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+					</svg>
+					发现
+				</h2>
+				<hr>
+				<br />
+
+				<!-- 				问题列表显示 -->
+				<div class="list-group">
+					<a href="#" th:each="item:${pageInfo.getList()}"
+						class="list-group-item list-group-item-action active"
+						aria-current="true">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">
+								<img th:src="@{'/' + ${item.getUser().getPicUrl()}}"
+									style="width: 50px; height: 50px" class="img-thumbnail"
+									alt="用户头像"> [[${item.getTitle}]] [['图片链接'+
+								${item.getUser().getPicUrl()}]]
+
+							</h5>
+							<small>[['创建时间'+${item.getCreateTime()}]]</small>
+						</div>
+						<p class="mb-1">[[${item.getDescription()}]]</p> <small>[['评论数'+${item.getCommentCount()}]]</small>
+					</a>
+				</div>
+
+				<br>
+				<!-- 				分页导航栏 -->
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li class="page-item" th:classappend="${!pageInfo.isHasPreviousPage()}? 'disabled'"><a class="page-link" th:href="@{/(pn=${pageInfo.getPageNum()-1})}"  >上一页</a></li>
+						<li class="page-item" th:each="num:${pageInfo.getNavigatepageNums()}" >
+<!-- 						th:classappend="${num==pageInfo.getPageNum()}? 'bs-info'" -->
+							<a class="page-link" th:href="@{/(pn=${num})}" >
+								[[${num}]]
+							</a>
+						</li>
+						<li class="page-item" th:classappend="${!pageInfo.isHasNextPage()}? 'disabled'"><a class="page-link" th:href="@{/(pn=${pageInfo.getPageNum()+1})}" >下一页</a></li>
+					</ul>
+				</nav>
+
+			</div>
+			<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12 text-info">
+				<h1>热门问题</h1>
+				<br> 1： <br> 2： <br> 3： <br>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
