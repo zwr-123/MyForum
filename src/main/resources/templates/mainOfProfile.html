@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>用户中心</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+	<!-- 	navigator -->
+	<div th:replace="~{common/common1 :: navigator}"></div>
+
+<!-- 	主体 -->
+	<div class="container-fluid bg-light">
+		<div class="row">
+		
+			<div class="col-xxl-9 col-xl-9 col-lg-9 col-md-12">
+				<h2>个人中心首页</h2>
+				<hr>
+				<br>
+				<h1>第一行</h1>
+				<h1>第二行</h1>
+				<h1>第三行</h1>
+				<h1>第四行</h1>
+				<h1>第五行</h1>
+			</div>
+			
+<!-- 			右边列表导航 -->
+		<div th:replace="~{common/common1 :: sidebar(activrSide='main')}" ></div>
+			
+		</div>
+	</div>
+	
+</body>
+</html>

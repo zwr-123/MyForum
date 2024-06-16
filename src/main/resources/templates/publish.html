@@ -10,6 +10,7 @@
 	<!-- 	navigator -->
 	<div th:replace="~{common/common1 :: navigator}"></div>
 
+<!-- 	主体 -->
 	<div class="container-fluid bg-light">
 		<div class="row">
 			<div class="col-xxl-9 col-xl-9 col-lg-9 col-md-12">
@@ -26,7 +27,7 @@
 <!-- 				空行 -->
 				<br/>
 				<br/>
-				<form class="mx-1 my-1" th:action="@{/publish}" method="post">
+				<form class="mx-1 my-1" th:action="@{/question/publish}" method="post">
 					  <div class="mb-3">
 					    <label for="title" class="form-label">问题标题</label>
 					    <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" th:value="${questionException}!=null?${questionException.getQuestion.getTitle()}:' '">

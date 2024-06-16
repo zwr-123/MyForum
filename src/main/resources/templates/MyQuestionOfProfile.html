@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>我的问题</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+	<!-- 	navigator -->
+	<div th:replace="~{common/common1 :: navigator}"></div>
+
+	<!-- 	主体 -->
+	<div class="container-fluid bg-light">
+		<div class="row">
+
+			<!-- 我的问题列表 -->
+			<div class="col-xxl-9 col-xl-9 col-lg-9 col-md-12">
+				<h1>我的问题</h1>
+				<hr>
+				<br>
+				
+				<div class="list-group">
+					<a href="#" th:each="item:${pageInfo.getList()}"
+						class="list-group-item list-group-item-action active"
+						aria-current="true">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">
+							</h5>
+							<small>[['创建时间'+${item.getCreateTime()}]]</small>
+						</div>
+						<p class="mb-1">[[${item.getDescription()}]]</p> <small>[['评论数'+${item.getCommentCount()}]]</small>
+					</a>
+				</div>
+
+<!-- 				分页导航栏 -->
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li class="page-item"
+							th:classappend="${!pageInfo.isHasPreviousPage()}? 'disabled'"><a
+							class="page-link" th:href="@{/user/profile/MyQuestion(pn=${pageInfo.getPageNum()-1})}">上一页</a></li>
+						<li class="page-item"
+							th:each="num:${pageInfo.getNavigatepageNums()}">
+							<!-- 						th:classappend="${num==pageInfo.getPageNum()}? 'bs-info'" -->
+							<a class="page-link" th:href="@{/user/profile/MyQuestion(pn=${num})}"> [[${num}]] </a>
+						</li>
+						<li class="page-item"
+							th:classappend="${!pageInfo.isHasNextPage()}? 'disabled'"><a
+							class="page-link" th:href="@{/user/profile/MyQuestion(pn=${pageInfo.getPageNum()+1})}">下一页</a></li>
+					</ul>
+				</nav>
+
+			</div>
+
+			<!-- 			右边列表导航 -->
+			<div
+				th:replace="~{common/common1 :: sidebar(activrSide='MyQuestion')}">
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

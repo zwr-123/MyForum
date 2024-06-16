@@ -5,7 +5,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg bg-secondary" th:fragment="navigator">
+<!-- 	公用头部导航栏 -->
+	<nav class="navbar navbar-expand-lg bg-secondary"
+		th:fragment="navigator">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">我的论坛</a>
 			<button class="navbar-toggler" type="button"
@@ -17,27 +19,26 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+						aria-current="page" th:href="@{/}">首页</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">链接</a></li>
 
 					<li class="nav-item"><a class="nav-link"
 						href="https://github.com/login/oauth/authorize?client_id=Ov23lieCe1UectFRY6bN"
 						th:if="${session.gitHubUser==null}">登录</a> <!--            disabled -->
 					</li>
 
-					<li class="nav-item" th:if="${param.LoginMsg!=null}"><a class="nav-link">[[${param.LoginMsg}]]</a>
-					</li>
+					<li class="nav-item" th:if="${param.LoginMsg!=null}"><a
+						class="nav-link">[[${param.LoginMsg}]]</a></li>
 
 					<li class="nav-item dropdown" th:if="${session.gitHubUser != null}">
 						<a class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
 							[[${session.gitHubUser.getLogin()}]] </a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Action</a></li>
-							<li><a class="dropdown-item" href="#">Another action</a></li>
+							<li><a class="dropdown-item" th:href="@{/question/publish}">发布问题</a></li>
+							<li><a class="dropdown-item" th:href="@{/user/profile/main}">个人中心</a></li>
 							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="#">Something else
-									here</a></li>
+							<li><a class="dropdown-item" href="#">退出登录</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -49,5 +50,17 @@
 			</div>
 		</div>
 	</nav>
+
+<!-- 	公用侧边栏 -->
+		<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12 text-info" th:fragment="sidebar">
+				<div class="list-group">
+						<a th:href="@{/user/profile/main}" th:classappend="${activrSide=='main'}? 'active'" class="list-group-item list-group-item-action" aria-current="true">个人中心首页</a> 
+						<a th:href="@{/user/profile/MyQuestion}" th:classappend="${activrSide=='MyQuestion'}? 'active'" class="list-group-item list-group-item-action">我的问题</a> 
+						<a th:href="@{/user/profile/MyReply}" th:classappend="${activrSide=='MyReply'}? 'active'" class="list-group-item list-group-item-action">我的回复</a> 
+<!-- 						<a th:href="@{}" th:classappend="${activrSide=='main'}? 'active'" class="list-group-item list-group-item-action">链接导航4</a>  -->
+<!-- 						<a class="list-group-item list-group-item-action disabled">被禁用的导航5</a> -->
+				</div>
+		</div>
+
 </body>
 </html>

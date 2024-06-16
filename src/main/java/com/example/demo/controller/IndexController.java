@@ -38,4 +38,5 @@ public class IndexController {
 		m.addAttribute("pageInfo",pageInfo);
 		return "index";
 	}
+	
 }
