@@ -26,7 +26,7 @@
 
 				<!-- 				问题列表显示 -->
 				<div class="list-group">
-					<a href="#" th:each="item:${pageInfo.getList()}"
+					<a th:href="@{/question/{id}(id=${item.getId()})}" th:each="item:${pageInfo.getList()}"
 						class="list-group-item list-group-item-action active"
 						aria-current="true">
 						<div class="d-flex w-100 justify-content-between">

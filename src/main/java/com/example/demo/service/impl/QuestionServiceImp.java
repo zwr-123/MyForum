@@ -2,12 +2,16 @@ package com.example.demo.service.impl;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.bean.Question;
 import com.example.demo.bean.QuestionException;
+import com.example.demo.bean.User;
+import com.example.demo.bean.DTO.QuestionDTO;
 import com.example.demo.mapper.QuestionMapper;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.QuestionService;
 import com.example.demo.util.BaseContext;
 
@@ -15,6 +19,9 @@ import com.example.demo.util.BaseContext;
 public class QuestionServiceImp implements QuestionService{
 	@Autowired
 	QuestionMapper questionMapper;
+	
+	@Autowired
+	UserMapper userMapper;
 	/**
 	 * 发布问题
 	 */
@@ -39,6 +46,23 @@ public class QuestionServiceImp implements QuestionService{
 		question.setCreatorId(BaseContext.getCurrentId());
 		
 		questionMapper.insertQuestion(question);
+	}
+	
+	
+	/**
+	 * 根据id返回问题信息
+	 */
+	@Override
+	public QuestionDTO seletById(Integer id) {
+		Question question = questionMapper.selectDtoById(id);
+		QuestionDTO questionDTO = null;
+		if(question!=null) {
+			questionDTO = new QuestionDTO();
+			BeanUtils.copyProperties(question, questionDTO);
+			User user = userMapper.selectByID(question.getCreatorId());
+			questionDTO.setUser(user);
+		}
+		return questionDTO;
 	}
 		
 }

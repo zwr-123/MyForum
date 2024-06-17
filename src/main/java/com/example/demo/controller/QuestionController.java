@@ -4,12 +4,15 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.bean.GitHubUser;
 import com.example.demo.bean.Question;
+import com.example.demo.bean.DTO.QuestionDTO;
 import com.example.demo.service.QuestionService;
 import com.example.demo.util.BaseContext;
 
@@ -36,10 +39,24 @@ public class QuestionController {
 	}
 	
 	
+	/**
+	 * 发布问题
+	 * @date 2024年6月17日 上午10:46:03
+	 * @param question
+	 * @param req
+	 * @return
+	 */
 	@PostMapping("/publish")
 	public String addQuestion(Question question,HttpServletRequest req) {
 		
 		questionService.addQuestion(question);
 		return "redirect:/";
+	}
+	
+	@GetMapping("/{id}")
+	public String questionDeatil(@PathVariable Integer id,Model model) {
+		QuestionDTO questionDTO=questionService.seletById(id);
+		model.addAttribute("questionDTO", questionDTO);
+		return "question";
 	}
 }
