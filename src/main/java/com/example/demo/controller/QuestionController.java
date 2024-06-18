@@ -38,6 +38,19 @@ public class QuestionController {
 		return "publish";
 	}
 	
+	/**
+	 * 修改问题
+	 * @date 2024年6月18日 上午8:21:38
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/publish/{id}")
+	public String ToPublish(@PathVariable Integer id,Model model) {
+		Question question = questionService.seletById(id);
+		model.addAttribute("qUp", question);
+		return "publish";
+	}
+	
 	
 	/**
 	 * 发布问题
@@ -48,14 +61,27 @@ public class QuestionController {
 	 */
 	@PostMapping("/publish")
 	public String addQuestion(Question question,HttpServletRequest req) {
+		if(question.getId()==null) {
+			questionService.addQuestion(question);
+		}else {
+			question.setModifiedTime(LocalDateTime.now());
+			questionService.updateQuestion(question);
+		}
 		
-		questionService.addQuestion(question);
 		return "redirect:/";
 	}
 	
+	/**
+	 * 点击问题，进入问题详情页
+	 * @date 2024年6月18日 上午8:06:48
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	
 	@GetMapping("/{id}")
 	public String questionDeatil(@PathVariable Integer id,Model model) {
-		QuestionDTO questionDTO=questionService.seletById(id);
+		QuestionDTO questionDTO=questionService.seletDtoById(id);
 		model.addAttribute("questionDTO", questionDTO);
 		return "question";
 	}

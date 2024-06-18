@@ -28,18 +28,19 @@
 				<br/>
 				<br/>
 				<form class="mx-1 my-1" th:action="@{/question/publish}" method="post">
+				<input type="hidden" name=id th:value="${qUp!=null}?${qUp.getId()}">
 					  <div class="mb-3">
 					    <label for="title" class="form-label">问题标题</label>
-					    <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" th:value="${questionException}!=null?${questionException.getQuestion.getTitle()}:' '">
+					    <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" th:value="${questionException}!=null?${questionException.getQuestion.getTitle()}:(${qUp!=null}?${qUp.getTitle()}:' ')">
 					    <div id="emailHelp" class="form-text">尽量简洁</div>
 					  </div>
 					  <div class="mb-3">
 					    <label for="des" class="form-label">内容</label>
-					    <textarea class="form-control" rows="8" cols="40" id="des" name="description" th:text="${questionException}!=null?${questionException.getQuestion.getDescription()}:' '"></textarea>
+					    <textarea class="form-control" rows="8" cols="40" id="des" name="description" th:text="${questionException}!=null?${questionException.getQuestion.getDescription()}:(${qUp!=null}?${qUp.getDescription()}:' ')"></textarea>
 					  </div>
 					   <div class="mb-3">
 					    <label for="tag" class="form-label">添加标签：</label>
-					    <input type="text" class="form-control" id="tag" name="tag" aria-describedby="emailHelp">
+					    <input type="text" class="form-control" id="tag" name="tag" aria-describedby="emailHelp" th:value="${qUp!=null}?${qUp.getDescription()}:''">
 					    <div id="emailHelp" class="form-text">输入标签，以，隔开</div>
 					  </div>
 					  

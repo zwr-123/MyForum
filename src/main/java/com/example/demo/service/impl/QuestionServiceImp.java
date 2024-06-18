@@ -53,7 +53,7 @@ public class QuestionServiceImp implements QuestionService{
 	 * 根据id返回问题信息
 	 */
 	@Override
-	public QuestionDTO seletById(Integer id) {
+	public QuestionDTO seletDtoById(Integer id) {
 		Question question = questionMapper.selectDtoById(id);
 		QuestionDTO questionDTO = null;
 		if(question!=null) {
@@ -63,6 +63,25 @@ public class QuestionServiceImp implements QuestionService{
 			questionDTO.setUser(user);
 		}
 		return questionDTO;
+	}
+
+
+	/**
+	 * 根据id查询question
+	 */
+	@Override
+	public Question seletById(Integer id) {
+		return questionMapper.selectOneById(id);
+	}
+
+	/**
+	 * 更新问题
+	 */
+
+	@Override
+	public void updateQuestion(Question question) {
+		// TODO Auto-generated method stub
+		questionMapper.updateOne(question);
 	}
 		
 }

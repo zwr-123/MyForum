@@ -17,6 +17,8 @@
 			${questionDTO.getCommentCount()}]]
 			<hr>
 			[[${questionDTO.getDescription()}]]
+			<hr>
+			<a th:if="${session.gitHubUser!=null}" th:href="@{/question/publish/{id}(id=${questionDTO.getId()})}">编辑</a>
 		</div>
 
 		<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12">

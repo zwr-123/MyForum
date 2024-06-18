@@ -44,6 +44,7 @@ public class UserController {
 
 	
 	/**
+	 * 登录
 	 * code ---> access_token  --->插入用户信息
 	 * @date 2024年5月7日 上午9:42:49
 	 * @param code
@@ -92,10 +93,10 @@ public class UserController {
 					user.setUpdateTime(LocalDateTime.now());
 					us.insert(user);
 					rep.addCookie(new Cookie("token", token));
+				}else {
+//					若已存在用户，传递cookie给前端
+					rep.addCookie(new Cookie("token", resUser.getToken()));
 				}
-				
-//				若已存在用户，传递cookie给前端
-				rep.addCookie(new Cookie("token", resUser.getToken()));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -106,8 +107,21 @@ public class UserController {
 		}
 	}
 
-	
-	
+	/**
+	 * 退出登录
+	 * @date 2024年6月18日 上午9:40:41
+	 * @param req
+	 * @return
+	 */
+	@GetMapping("/user/logout")
+	public String logout(HttpServletRequest req,HttpServletResponse rep) {
+		req.getSession().removeAttribute("gitHubUser");
+		Cookie cookie = new Cookie("token", null);
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		rep.addCookie(cookie);
+		return "redirect:/";
+	}
 	
 	
 	
