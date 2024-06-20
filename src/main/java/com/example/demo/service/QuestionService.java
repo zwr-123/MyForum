@@ -30,4 +30,10 @@ public interface QuestionService {
 	 */
 	void updateQuestion(Question question);
 
+	/**
+	 * 阅读数增加
+	 * @date 2024年6月20日 上午8:46:03
+	 */
+	void viewCountIncrease(Integer id);
+
 }

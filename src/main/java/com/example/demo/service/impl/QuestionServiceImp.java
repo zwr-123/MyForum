@@ -83,5 +83,14 @@ public class QuestionServiceImp implements QuestionService{
 		// TODO Auto-generated method stub
 		questionMapper.updateOne(question);
 	}
+
+	/**
+	 * 阅读数增加
+	 */
+
+	@Override
+	public void viewCountIncrease(Integer id) {
+		questionMapper.updateByViewCount(id);
+	}
 		
 }

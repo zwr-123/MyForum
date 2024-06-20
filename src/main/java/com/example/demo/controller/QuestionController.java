@@ -82,6 +82,7 @@ public class QuestionController {
 	@GetMapping("/{id}")
 	public String questionDeatil(@PathVariable Integer id,Model model) {
 		QuestionDTO questionDTO=questionService.seletDtoById(id);
+		questionService.viewCountIncrease(id);
 		model.addAttribute("questionDTO", questionDTO);
 		return "question";
 	}
