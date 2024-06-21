@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -24,7 +25,7 @@ public class config1 implements WebMvcConfigurer{
 		// TODO Auto-generated method stub
 		registry.addInterceptor(lcInterceptor)
 		.addPathPatterns("/**")
-		.excludePathPatterns("/","/callback","/css/**","/js/**","/pic/**");
+		.excludePathPatterns("/","/callback","/css/**","/js/**","/pic/**","/comment/insertOne");
 	}
 	
 	@Bean
@@ -37,4 +38,15 @@ public class config1 implements WebMvcConfigurer{
 	    };
 	}
 
+
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		 registry.addMapping("/**") // 对所有路径应用跨域配置
+         .allowedOriginPatterns("*") // 允许任何域进行跨域访问
+         .allowedMethods("GET", "POST", "PUT", "DELETE") // 允许的请求方法
+         .allowedHeaders("*") // 允许任意的请求头 
+         .allowCredentials(true); // 是否允许发送凭据
+	}
+	
+	
 }

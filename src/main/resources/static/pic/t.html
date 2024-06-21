@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<button onclick="f1()">你好</button>
+
+	<script type="text/javascript">
+	function f1(){
+		var setmeal={
+				parentId: 2,
+				type: 3,
+				commentorId: 17,
+				content: "路过"
+		}
+		// 将JSON对象转换为字符串
+		var jsonString = JSON.stringify(setmeal);
+		 
+		// 使用fetch API发送POST请求
+		fetch('http://127.0.0.1:8080/comment/insertOne', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/json'
+		  },
+		  body: jsonString
+		})
+		.then(response => response.json()) // 解析JSON响应
+		.then(data => console.log(data)) // 处理数据
+		.catch(error => console.error('Error:', error)); // 错误处理
+	}
+	</script>
+			
+
+</body>
+</html>
