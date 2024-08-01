@@ -11,6 +11,7 @@ import com.example.demo.enums.CommentErrorMessage;
 import com.example.demo.enums.commentType;
 import com.example.demo.mapper.CommentMapper;
 import com.example.demo.service.CommentService;
+import com.example.demo.util.BaseContext;
 
 @Service
 public class CommentServiceImp implements CommentService{
@@ -31,6 +32,7 @@ public class CommentServiceImp implements CommentService{
 		LocalDateTime now = LocalDateTime.now();
 		comment.setGmtCreate(now);
 		comment.setGmtModified(now);
+		comment.setCommentorId(BaseContext.getCurrentId());
 		commentMapper.insertOne(comment);
 	}
 	
