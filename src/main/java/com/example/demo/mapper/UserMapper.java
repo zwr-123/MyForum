@@ -1,5 +1,7 @@
 package com.example.demo.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -34,5 +36,8 @@ public interface UserMapper {
 	 */
 	@Select("select * from user where token=#{value}")
 	User selectByToken(String value);
+	
+	
+	List<User> selectUsersByIds(List<Integer> ids);
 
 }

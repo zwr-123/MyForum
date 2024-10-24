@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.bean.Comment;
 import com.example.demo.bean.GitHubUser;
 import com.example.demo.bean.Question;
+import com.example.demo.bean.DTO.CommentDTO;
 import com.example.demo.bean.DTO.QuestionDTO;
+import com.example.demo.service.CommentService;
 import com.example.demo.service.QuestionService;
 import com.example.demo.util.BaseContext;
 
@@ -26,6 +30,9 @@ public class QuestionController {
 	
 	@Autowired
 	QuestionService questionService;
+	
+	@Autowired
+	CommentService commentService;
 	
 	
 	/**
@@ -83,7 +90,12 @@ public class QuestionController {
 	public String questionDeatil(@PathVariable Integer id,Model model) {
 		QuestionDTO questionDTO=questionService.seletDtoById(id);
 		questionService.viewCountIncrease(id);
+		
+		List<CommentDTO> commentDTO=commentService.selectCommentDTO(id,1);
+		
+		
 		model.addAttribute("questionDTO", questionDTO);
+		model.addAttribute("commentDTO",commentDTO);
 		return "question";
 	}
 }
