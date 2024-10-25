@@ -6,33 +6,82 @@
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/js/jquery.js}"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 <!-- 不能在外部js中使用thymeleaf语法 -->
 <script th:inline="javascript">
-	function comment() {
+	function reply1() {
 		var content = $("#floatingTextarea").val()
 		var parentId = /*[[${questionDTO.getId()}]]*/
+		comment(parentId, 1, content)
+	}
 
-		console.log(/*[[${questionDTO.getId()}]]*/)
-		console.log(content)
+	function reply2(e) {
+		var parentId = e.getAttribute("data");
+		var content = $("#input-"+ parentId).val();
+		comment(parentId, 2, content)
+	}
 
+	function comment(parentId, type, content) {
 		$.ajax({
 			type : 'POST',
 			url : '/comment/insertOne',
 			data : JSON.stringify({
 				"parentId" : parentId,
 				"content" : content,
-				"type" : 1
+				"type" : type
 			}),
 			contentType : 'application/json',
 			dataType : 'json',
 			success : function(data, textStatus, jqXHR) {
 				console.log();
-				if(data.msg == "评论内容不能为空"){
+				if (data.msg == "评论内容不能为空") {
 					alert(data.msg);
 				}
 			}
 		})
+	}
+
+	// 	获取并展开二级评论， 高亮图案
+	function collapse(e) {
+		
+		var id = e.getAttribute("data");
+		var item = $("#comment" + id);
+		if (item.hasClass("show")) {
+
+			$("[data='" + id + "']").removeAttr("style");
+			item.removeClass("show");
+		} else {
+			
+			$.ajax({
+				type : 'GET',
+				url : '/comment/'+ id,
+				contentType : 'application/json',
+				dataType : 'json',
+				success : function(data, textStatus, jqXHR) {
+					console.log();
+					if (data.code == 1) {
+						console.log(data.data);
+						var fa=$("#comment"+ id);
+// 						先删除所有之前的二级评论
+						fa.children(".card.card-body").each(function(index, element) {
+							$(element).remove();
+						});
+						
+// 						添加所有二级评论
+						for (let i = 0; i < data.data.length; i++) {
+								$("#comment"+ id).prepend("<div class='card card-body'>"+ data.data[i].user.login + "：" + data.data[i].content +"</div>");
+							}
+					}
+				}
+			})
+			
+			$("[data='" + id + "']").css({
+				'color' : 'blue'
+			});
+
+			item.addClass("show");
+		}
 	}
 </script>
 
@@ -55,25 +104,43 @@
 			<hr>
 
 			<!-- 评论区 -->
-			<h3>[[${questionDTO.getCommentCount()}+'个回复']]</h3><br>
+			<h3>[[${questionDTO.getCommentCount()}+'个回复']]</h3>
+			<br>
 			<hr>
 			<div th:each="item:${commentDTO}">
-				<h6><img th:src="@{'/' + ${item.getUser().getPicUrl()}}"
-					style="width: 30px; height: 30px" class="img-thumbnail" alt="用户头像">[[${item.getUser().getLogin()}]]</h6>
+				<!--一级评论 -->
+				<h6>
+					<img th:src="@{'/' + ${item.getUser().getPicUrl()}}"
+						style="width: 30px; height: 30px" class="img-thumbnail" alt="用户头像">[[${item.getUser().getLogin()}]]
+				</h6>
 				<h5>[[${item.getContent()}]]</h5>
-				<i class="bi bi-hand-thumbs-up"></i>
-				<i class="bi bi-chat-square-dots"></i>
+				<i class="bi bi-hand-thumbs-up"></i> <i
+					class="bi bi-chat-square-dots" th:data="${item.id}"
+					onclick="collapse(this)"></i>
+
+				<!--二级评论 -->
+				<div class="collapse" th:id="${'comment'+ item.id}">
+					<div class="card card-body">二级评论内容</div>
+					<!--评论输入框 -->
+					<div class="form-floating">
+						<textarea class="form-control" placeholder="Leave a comment here"
+							th:id="${'input-'+ item.id}"></textarea>
+						<label for="${'input-'+ item.id}">评论一下</label>
+					</div>
+					<button type="submit" class="btn btn-primary" th:data="${item.id}"  onclick="reply2(this)">评论</button>
+				</div>
+
 				<hr>
 			</div>
-			
-<!-- 			回复框 -->
+
+			<!-- 			回复框 -->
 			<hr>
 			<div class="form-floating">
 				<textarea class="form-control" placeholder="Leave a comment here"
 					id="floatingTextarea"></textarea>
 				<label for="floatingTextarea">Comments</label>
 			</div>
-			<button type="submit" class="btn btn-primary" onclick="comment()">回复</button>
+			<button type="submit" class="btn btn-primary" onclick="reply1()">回复</button>
 		</div>
 
 		<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12">

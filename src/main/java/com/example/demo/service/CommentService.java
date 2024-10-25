@@ -16,12 +16,19 @@ public interface CommentService {
 
 	
 	/**
-	 * 查询问题下的所有一级评论
+	 * 查询评论
 	 * @date 2024年10月22日 下午4:14:52
 	 */
 	List<Comment>  selectByQIdAndType(int id,int type);
 
 
 	List<CommentDTO> selectCommentDTO(Integer id, int type);
+
+
+	/**
+	 * 查询二级评论
+	 * @date 2024年10月22日 下午4:14:52
+	 */
+	List<CommentDTO> selectComment2(int i, int j);
 
 }

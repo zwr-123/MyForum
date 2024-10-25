@@ -63,7 +63,7 @@ public class CommentServiceImp implements CommentService{
 	}
 
 	/**
-	 * 查询问题下的所有一级评论
+	 * 查询评论
 	 * @date 2024年10月22日 下午4:14:52
 	 */
 	@Override
@@ -100,6 +100,16 @@ public class CommentServiceImp implements CommentService{
 		
 		commentsDTOList.forEach(System.out :: println);
 		return commentsDTOList;
+	}
+
+	
+	/**
+	 * 查询二级评论
+	 */
+	@Override
+	public List<CommentDTO> selectComment2(int i, int j) {
+		commentMapper.selectByQIdAndType(i, j);
+		return null;
 	}
 	
 }
