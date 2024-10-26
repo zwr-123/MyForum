@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.bean.Comment;
 import com.example.demo.bean.GitHubUser;
 import com.example.demo.bean.Question;
+import com.example.demo.bean.tag;
 import com.example.demo.bean.DTO.CommentDTO;
 import com.example.demo.bean.DTO.QuestionDTO;
 import com.example.demo.service.CommentService;
@@ -98,5 +99,18 @@ public class QuestionController {
 		model.addAttribute("commentDTO",commentDTO);
 		model.addAttribute("relQuestion",relQuestion);
 		return "question";
+	}
+	
+	
+	/**
+	 * 测试 用枚举类标识问题的标签
+	 * @date 2024年10月26日 下午2:56:07
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/test")
+	public String test(Model model) {
+		model.addAttribute("tags",tag.values());
+		return "testht";
 	}
 }

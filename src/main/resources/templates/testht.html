@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<!-- 测试 显示标签 -->
+<body>
+	<div th:each="item:${tags}">
+		<h1>分类[[${item.kind}]]</h1>
+		<ul>
+			<li th:each="sign:${item.signList}">[[${sign}]]</li>
+		</ul>
+	</div>
+</body>
+</html>

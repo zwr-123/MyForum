@@ -105,7 +105,7 @@
 			<hr>
 			<!-- 问题标签 -->
 			<button type="button" class="btn btn-info"
-				th:each="item:${questionDTO.tag.split('，')}">[[${item}]]</button>
+				th:each="item:${questionDTO.tag.split(',')}">[[${item}]]</button>
 			<br> <a th:if="${session.gitHubUser!=null}"
 				th:href="@{/question/publish/{id}(id=${questionDTO.getId()})}">编辑</a>
 			<hr>

@@ -57,9 +57,8 @@ public class CommentServiceImp implements CommentService{
 		comment.setGmtModified(now);
 		comment.setCommentorId(BaseContext.getCurrentId());
 		commentMapper.insertOne(comment);
-		if(comment.getType()==1) {
-			questionMapper.updateComment(comment.getParentId());
-		}
+		questionMapper.updateComment(comment.getParentId());
+			
 	}
 
 	/**
