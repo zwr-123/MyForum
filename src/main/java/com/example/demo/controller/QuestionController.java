@@ -92,10 +92,11 @@ public class QuestionController {
 		questionService.viewCountIncrease(id);
 		
 		List<CommentDTO> commentDTO=commentService.selectCommentDTO(id,1);
-		
+		List<Question> relQuestion=questionService.selectQuestionByTags(questionDTO.getTag(),id);
 		
 		model.addAttribute("questionDTO", questionDTO);
 		model.addAttribute("commentDTO",commentDTO);
+		model.addAttribute("relQuestion",relQuestion);
 		return "question";
 	}
 }

@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +93,16 @@ public class QuestionServiceImp implements QuestionService{
 	@Override
 	public void viewCountIncrease(Integer id) {
 		questionMapper.updateByViewCount(id);
+	}
+
+
+	@Override
+	public List<Question> selectQuestionByTags(String tag, Integer id) {
+		// 你好，a标签
+		List<String> tagList = Arrays.asList(tag.split("，"));
+		String newTag = tag.replace(",", "|");
+		List<Question> questionList=questionMapper.selectQuestionByTags(newTag,id);
+		return questionList;
 	}
 		
 }

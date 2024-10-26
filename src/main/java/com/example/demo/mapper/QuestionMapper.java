@@ -49,5 +49,8 @@ public interface QuestionMapper {
 	
 	@Update("update question set comment_count = comment_count + 1 where id = #{id}")
 	void updateComment(Integer id);
+
+	
+	List<Question> selectQuestionByTags(String newTag, Integer id);
 	
 }

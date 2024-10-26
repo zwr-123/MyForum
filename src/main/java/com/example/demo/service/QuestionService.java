@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import com.example.demo.bean.Question;
 import com.example.demo.bean.DTO.QuestionDTO;
 
@@ -35,5 +37,14 @@ public interface QuestionService {
 	 * @date 2024年6月20日 上午8:46:03
 	 */
 	void viewCountIncrease(Integer id);
+
+	/**
+	 * 根据tag查询相关问题
+	 * @date 2024年10月26日 下午12:15:39
+	 * @param tag
+	 * @param id
+	 * @return
+	 */
+	List<Question> selectQuestionByTags(String tag, Integer id);
 
 }
