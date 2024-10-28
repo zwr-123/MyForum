@@ -31,4 +31,13 @@ public interface CommentService {
 	 */
 	List<CommentDTO> selectComment2(int i, int j);
 
+
+	/**
+	 * 根据id查询评论
+	 * @date 2024年10月28日 下午4:58:02
+	 * @param parentId
+	 * @return
+	 */
+	Comment selectComment(Integer parentId);
+
 }

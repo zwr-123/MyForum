@@ -110,5 +110,11 @@ public class CommentServiceImp implements CommentService{
 		commentMapper.selectByQIdAndType(i, j);
 		return null;
 	}
+
+	@Override
+	public Comment selectComment(Integer id) {
+		// TODO Auto-generated method stub
+		return commentMapper.selectById(id);
+	}
 	
 }

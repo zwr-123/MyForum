@@ -16,5 +16,8 @@ public interface CommentMapper {
 
 	@Select("select * from comment where parent_id=#{id} and type=#{type}")
 	List<Comment> selectByQIdAndType(int id, int type);
+
+	@Select("select * from comment where id=#{id}")
+	Comment selectById(Integer id);
 	
 }	

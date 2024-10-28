@@ -56,7 +56,8 @@
 				<div class="list-group">
 						<a th:href="@{/user/profile/main}" th:classappend="${activrSide=='main'}? 'active'" class="list-group-item list-group-item-action" aria-current="true">个人中心首页</a> 
 						<a th:href="@{/user/profile/MyQuestion}" th:classappend="${activrSide=='MyQuestion'}? 'active'" class="list-group-item list-group-item-action">我的问题</a> 
-						<a th:href="@{/user/profile/MyReply}" th:classappend="${activrSide=='MyReply'}? 'active'" class="list-group-item list-group-item-action">我的回复</a> 
+						<a th:href="@{/user/profile/MyReply}" th:classappend="${activrSide=='MyReply'}? 'active'" class="list-group-item list-group-item-action">我的回复</a>
+						<a th:href="@{/user/profile/MyNotification}" th:classappend="${activrSide=='MyNotification'}? 'active'" class="list-group-item list-group-item-action">我的通知[[${notifications.size()}]]</a> 
 <!-- 						<a th:href="@{}" th:classappend="${activrSide=='main'}? 'active'" class="list-group-item list-group-item-action">链接导航4</a>  -->
 <!-- 						<a class="list-group-item list-group-item-action disabled">被禁用的导航5</a> -->
 				</div>

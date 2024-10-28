@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.bean.Comment;
 import com.example.demo.bean.CommentException;
+import com.example.demo.bean.Notification;
+import com.example.demo.bean.Question;
 import com.example.demo.bean.Result;
+import com.example.demo.bean.User;
 import com.example.demo.bean.DTO.CommentDTO;
 import com.example.demo.enums.CommentErrorMessage;
 import com.example.demo.service.CommentService;
+import com.example.demo.service.NotificationService;
+import com.example.demo.service.QuestionService;
+import com.example.demo.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -27,6 +34,15 @@ public class CommentController {
 	@Autowired
 	CommentService commentService;
 	
+	@Autowired
+	QuestionService questionService;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	NotificationService notificationService;
+	
 	@PostMapping("/insertOne")
 	@ResponseBody 
 	public String insertComment(@RequestBody Comment comment,HttpServletRequest request) {
@@ -34,7 +50,32 @@ public class CommentController {
 		if(request.getSession().getAttribute("gitHubUser") ==null) {
 			throw new CommentException(CommentErrorMessage.USER_NOT_LOGIN);
 		}
+		//插入评论
 		commentService.insertOne(comment);
+		
+//		插入通知
+		Notification notification=new Notification();
+		User user=userService.selectByID(comment.getCommentorId());
+		
+		//需要获取接受者（被评论人）的id，理论上要在comment中设置此字段。但我之前没设置，只能这样查询获得
+		if(comment.getType() == 1) {
+			Question question = questionService.seletById(comment.getParentId());
+			notification.setRecipientId(question.getCreatorId());
+		}else if(comment.getType() == 2) {
+			Comment com=commentService.selectComment(comment.getParentId());
+			notification.setRecipientId(com.getCommentorId());
+		}
+		
+		
+		notification.setSenderId(comment.getCommentorId());
+		notification.setSenderName(user.getLogin());
+		notification.setParentId(comment.getParentId());
+		notification.setType(comment.getType());
+		notification.setGmtCreate(LocalDateTime.now());
+		
+		notificationService.insertNotification(notification);
+
+
 		System.out.println("你好");
 		return "你好";
 	}
