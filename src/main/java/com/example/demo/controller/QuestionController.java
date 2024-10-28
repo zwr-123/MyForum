@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.bean.Comment;
 import com.example.demo.bean.GitHubUser;
@@ -18,6 +19,7 @@ import com.example.demo.bean.tag;
 import com.example.demo.bean.DTO.CommentDTO;
 import com.example.demo.bean.DTO.QuestionDTO;
 import com.example.demo.service.CommentService;
+import com.example.demo.service.NotificationService;
 import com.example.demo.service.QuestionService;
 import com.example.demo.util.BaseContext;
 
@@ -34,6 +36,9 @@ public class QuestionController {
 	
 	@Autowired
 	CommentService commentService;
+	
+	@Autowired
+	NotificationService notificationService;
 	
 	
 	/**
@@ -88,15 +93,22 @@ public class QuestionController {
 	 */
 	
 	@GetMapping("/{id}")
-	public String questionDeatil(@PathVariable Integer id,Model model) {
+	public String questionDeatil(@PathVariable Integer id,@RequestParam(required = false) Integer notificationId,Model model) {
 		QuestionDTO questionDTO=questionService.seletDtoById(id);
+		
+		//浏览数+1
 		questionService.viewCountIncrease(id);
+		//删除对应的通知
+		if(BaseContext.getCurrentId() != null && notificationId!=null) {
+			notificationService.removeOne(notificationId);
+		}
 		
 		List<CommentDTO> commentDTO=commentService.selectCommentDTO(id,1);
 		List<Question> relQuestion=questionService.selectQuestionByTags(questionDTO.getTag(),id);
 		
 		model.addAttribute("questionDTO", questionDTO);
 		model.addAttribute("commentDTO",commentDTO);
+		//相关搜索问题
 		model.addAttribute("relQuestion",relQuestion);
 		return "question";
 	}

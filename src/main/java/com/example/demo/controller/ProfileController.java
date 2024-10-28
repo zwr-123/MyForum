@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.bean.Notification;
 import com.example.demo.bean.Question;
+import com.example.demo.bean.DTO.NotificationDTO;
 import com.example.demo.bean.DTO.QuestionDTO;
 import com.example.demo.mapper.NotificationMapper;
 import com.github.pagehelper.Page;
@@ -29,6 +30,9 @@ public class ProfileController {
 	
 	@Autowired
 	NotificationMapper notificationMapper ;
+	
+	@Autowired
+	NotificationService notificationService;
 	
 	/**
 	 * 访问用户中心首页 profile
@@ -69,6 +73,22 @@ public class ProfileController {
 	@GetMapping("/MyReply")
 	public String toReplyOfProfile() {
 		return "MyReplyOfProfile";
+	}
+	
+	
+	/**
+	 * 访问我的通知 页面
+	 * @date 2024年6月16日 上午9:06:30
+	 * @return
+	 */
+	@GetMapping("/MyNotification")
+	public String toMyNotification(@RequestParam(defaultValue = "1") Integer pn,Model m) {
+		PageHelper.startPage(pn, 3);
+		Page<NotificationDTO> list=notificationService.selectUnRead(BaseContext.getCurrentId());
+		PageInfo<NotificationDTO> pageInfo=new PageInfo<>(list,2);
+		m.addAttribute("notifications",list);
+		m.addAttribute("pageInfo",pageInfo);
+		return "MyNotification";
 	}
 
 }

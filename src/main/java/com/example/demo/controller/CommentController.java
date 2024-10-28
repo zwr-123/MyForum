@@ -45,7 +45,7 @@ public class CommentController {
 	
 	@PostMapping("/insertOne")
 	@ResponseBody 
-	public String insertComment(@RequestBody Comment comment,HttpServletRequest request) {
+	public String insertComment(@RequestBody Comment comment,HttpServletRequest request,Integer questionId) {
 //		这里应该用token判断，但是为了简单用session判断
 		if(request.getSession().getAttribute("gitHubUser") ==null) {
 			throw new CommentException(CommentErrorMessage.USER_NOT_LOGIN);
@@ -70,6 +70,7 @@ public class CommentController {
 		notification.setSenderId(comment.getCommentorId());
 		notification.setSenderName(user.getLogin());
 		notification.setParentId(comment.getParentId());
+		notification.setRelQuestionId(questionId);
 		notification.setType(comment.getType());
 		notification.setGmtCreate(LocalDateTime.now());
 		

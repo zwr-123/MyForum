@@ -23,9 +23,10 @@
 	}
 
 	function comment(parentId, type, content) {
+		var questionDTOId= /*[[${questionDTO.getId()}]]*/ 
 		$.ajax({
 			type : 'POST',
-			url : '/comment/insertOne',
+			url : '/comment/insertOne?questionId=' + questionDTOId ,
 			data : JSON.stringify({
 				"parentId" : parentId,
 				"content" : content,

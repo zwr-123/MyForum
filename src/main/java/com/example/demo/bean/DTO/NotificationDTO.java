@@ -1,6 +1,8 @@
-package com.example.demo.bean;
+package com.example.demo.bean.DTO;
 
 import java.time.LocalDateTime;
+
+import com.example.demo.bean.Notification;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Notification {
+public class NotificationDTO<T> {
 	private int id;
 	private int senderId;
 	private String senderName;
@@ -19,4 +21,5 @@ public class Notification {
 	private int type;
 	private int status;
 	private LocalDateTime gmtCreate;
+	private T data;
 }
